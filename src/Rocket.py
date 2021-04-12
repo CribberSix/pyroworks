@@ -4,13 +4,13 @@ from random import randint
 
 
 class Rocket:
-    def __init__(self, x, y, speed, color, surface=None):
+    def __init__(self, x=None, y=None, speed=None, color=None, surface=None):
         self.surface = pygame.display.get_surface() if surface is None else surface
-        self.x = x
-        self.y = y
-        self.color = color
+        self.x = randint(0, pygame.display.get_surface().get_width()) if x is None else x
+        self.y = pygame.display.get_surface().get_height() if y is None else y
+        self.color = (randint(0, 255), randint(0, 255), randint(0, 255)) if color is None else color
         self.r = 5
-        self.speed = speed
+        self.speed = randint(10, 35) if speed is None else speed
         self.max_speed = 10
         self.acceleration = 0.95
         self.risen = False
