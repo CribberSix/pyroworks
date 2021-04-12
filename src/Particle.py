@@ -2,9 +2,8 @@ import pygame
 
 
 class Particle:
-
-    def __init__(self, x, y, acc_x, acc_y, color, r, reduce_mod=10):
-        self.screen = pygame.display.get_surface()
+    def __init__(self, x, y, acc_x, acc_y, color, r, reduce_mod=10, surface=None):
+        self.screen = pygame.display.get_surface() if surface is None else surface
         self.x = x
         self.y = y
         self.acc_x = acc_x
@@ -40,9 +39,9 @@ class Particle:
         self.y += self.acc_y
         self.y += 1
 
-        self.acc_x = self.acc_x * 0.925  # reduce acc_x constantly so it gets slower towards the edges
+        self.acc_x = (
+            self.acc_x * 0.925
+        )  # reduce acc_x constantly so it gets slower towards the edges
 
         if self.acc_y < 0:  # goes upwards -> reduce over time
             self.acc_y += abs(self.acc_y_original * 0.1)
-
-

@@ -3,8 +3,6 @@ import sys
 from random import randint
 from src.Rocket import Rocket
 
-screen = pygame.display.set_mode((900, 600))
-
 
 def create_randomized_rocket():
     x = randint(0, pygame.display.get_surface().get_width())
@@ -14,6 +12,7 @@ def create_randomized_rocket():
     return Rocket(x, y, speed, color)
 
 
+screen = pygame.display.set_mode((900, 600))
 rockets = []
 rocket_every_x_frames = 8
 c = 0

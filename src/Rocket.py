@@ -4,9 +4,8 @@ from random import randint
 
 
 class Rocket:
-
-    def __init__(self, x, y, speed, color):
-        self.screen = pygame.display.get_surface()
+    def __init__(self, x, y, speed, color, surface=None):
+        self.surface = pygame.display.get_surface() if surface is None else surface
         self.x = x
         self.y = y
         self.color = color
@@ -17,8 +16,14 @@ class Rocket:
         self.risen = False
         self.spawned_particles = False
         self.dead = False
-        self.trail_colours = [(45, 45, 45), (60, 60, 60), (75, 75, 75), (125, 125, 125), (150, 150, 150),
-                              (175, 175, 175)]
+        self.trail_colours = [
+            (45, 45, 45),
+            (60, 60, 60),
+            (75, 75, 75),
+            (125, 125, 125),
+            (150, 150, 150),
+            (175, 175, 175),
+        ]
 
         self.particles = []
 
@@ -30,7 +35,7 @@ class Rocket:
         """
         # Rendering rocket
         if not self.risen:
-            pygame.draw.circle(self.screen, self.color, (self.x, int(self.y)), self.r)
+            pygame.draw.circle(self.surface, self.color, (self.x, int(self.y)), self.r)
             self.render_trail()
 
         # Rendering explosion particles
@@ -84,12 +89,7 @@ class Rocket:
             color = self.create_color()
             r = randint(1, 4)
             reduce_mod = randint(4, 8)
-            p = Particle(self.x, int(self.y),
-                         acc_x,
-                         acc_y,
-                         color,
-                         r,
-                         reduce_mod)
+            p = Particle(self.x, int(self.y), acc_x, acc_y, color, r, reduce_mod, self.surface)
             self.particles.append(p)
 
     def render_trail(self):
@@ -102,7 +102,7 @@ class Rocket:
         y = self.y + (8 * (self.speed / self.max_speed))
         size = 1
         for i, tc in enumerate(self.trail_colours):
-            pygame.draw.circle(self.screen, tc, (self.x, int(y)),  size)
+            pygame.draw.circle(self.surface, tc, (self.x, int(y)), size)
             y = y + (8 * (self.speed / self.max_speed))
             if i <= len(self.trail_colours) / 4:
                 size += 1
